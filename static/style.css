@@ -1,0 +1,16 @@
+:root{--bg:#f7f7fb;--card:#fff;--accent:#2b6cb0;--danger:#e53e3e}
+*{box-sizing:border-box;font-family:Inter,Segoe UI,system-ui,Arial,Helvetica,sans-serif}
+body{margin:0;background:var(--bg);color:#1f2937}
+.container{max-width:720px;margin:32px auto;padding:20px}
+h1{margin:0 0 12px}
+.balance{background:var(--card);padding:16px;border-radius:8px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.add, .list{background:var(--card);padding:16px;border-radius:8px;margin-bottom:16px}
+form{display:flex;gap:8px}
+form input{flex:1;padding:8px;border:1px solid #e5e7eb;border-radius:6px}
+form button{padding:8px 12px;background:var(--accent);color:#fff;border:none;border-radius:6px}
+ul{list-style:none;padding:0;margin:0}
+li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f5f9}
+.amount{font-weight:600}
+.amount.negative{color:var(--danger)}
+.tx-meta{color:#6b7280;font-size:12px}
+.delete{background:transparent;border:none;color:#9ca3af;cursor:pointer}

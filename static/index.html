@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Simple Finance Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Finance Tracker</h1>
+
+      <section class="balance">
+        <div>Total: <span id="total">$0.00</span></div>
+      </section>
+
+      <section class="add">
+        <h2>Add Transaction</h2>
+        <form id="tx-form">
+          <input id="description" placeholder="Description" required />
+          <input id="amount" placeholder="Amount (use - for expense)" required />
+          <button type="submit">Add</button>
+        </form>
+      </section>
+
+      <section class="list">
+        <h2>Transactions</h2>
+        <ul id="tx-list"></ul>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
