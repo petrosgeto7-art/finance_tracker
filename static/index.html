@@ -11,7 +11,24 @@
       <h1>Finance Tracker</h1>
 
       <section class="balance">
-        <div>Total: <span id="total">$0.00</span></div>
+        <div class="stats">
+          <div class="stat">
+            <div class="label">Total</div>
+            <div class="value" id="total">$0.00</div>
+          </div>
+          <div class="stat">
+            <div class="label">Income</div>
+            <div class="value" id="income">$0.00</div>
+          </div>
+          <div class="stat">
+            <div class="label">Outcome</div>
+            <div class="value" id="outcome">$0.00</div>
+          </div>
+          <div class="stat">
+            <div class="label">Debt</div>
+            <div class="value" id="debt">$0.00</div>
+          </div>
+        </div>
       </section>
 
       <section class="add">
@@ -19,6 +36,12 @@
         <form id="tx-form">
           <input id="description" placeholder="Description" required />
           <input id="amount" placeholder="Amount (use - for expense)" required />
+          <select id="type">
+            <option value="income">Income</option>
+            <option value="outcome">Outcome</option>
+            <option value="debt">Debt</option>
+            <option value="other">Other</option>
+          </select>
           <button type="submit">Add</button>
         </form>
       </section>
