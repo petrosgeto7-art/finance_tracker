@@ -19,6 +19,7 @@ class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(200), nullable=False)
     amount = db.Column(db.Float, nullable=False)
+    type = db.Column(db.String(50), nullable=False, default='other')
     date = db.Column(db.String(50), nullable=False)
 
     def to_dict(self):
@@ -26,6 +27,7 @@ class Transaction(db.Model):
             'id': self.id,
             'description': self.description,
             'amount': self.amount,
+            'type': self.type,
             'date': self.date,
         }
 
@@ -46,6 +48,7 @@ def add_transaction():
     data = request.get_json() or {}
     description = data.get('description', '').strip()
     amount = data.get('amount')
+    tx_type = data.get('type', 'other')
     if not description or amount is None:
         return jsonify({'error': 'description and amount are required'}), 400
     try:
@@ -53,7 +56,7 @@ def add_transaction():
     except ValueError:
         return jsonify({'error': 'amount must be a number'}), 400
     date = data.get('date') or datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
-    tx = Transaction(description=description, amount=amount, date=date)
+    tx = Transaction(description=description, amount=amount, date=date, type=tx_type)
     db.session.add(tx)
     db.session.commit()
     return jsonify(tx.to_dict()), 201
@@ -72,5 +75,18 @@ def delete_transaction(tx_id):
 if __name__ == '__main__':
     db_exists = os.path.exists(DB_PATH)
     if not db_exists:
-        db.create_all()
+        # create_all needs an application context in Flask-SQLAlchemy 3+
+        with app.app_context():
+            db.create_all()
+    else:
+        # If DB exists, ensure the new `type` column is present (SQLite ALTER TABLE ADD COLUMN is safe)
+        try:
+            with app.app_context():
+                engine = db.get_engine()
+                with engine.connect() as conn:
+                    # Try to add the column; ignore if it already exists
+                    conn.execute("ALTER TABLE transaction ADD COLUMN type VARCHAR(50) DEFAULT 'other';")
+        except Exception:
+            # If column exists or ALTER fails, ignore and continue
+            pass
     app.run(debug=True)
