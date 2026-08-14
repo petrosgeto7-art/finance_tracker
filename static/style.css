@@ -1,16 +1,24 @@
-:root{--bg:#f7f7fb;--card:#fff;--accent:#2b6cb0;--danger:#e53e3e}
+:root{--bg:#6b21a8;--card:#ffffff;--accent:#7c3aed;--muted:#efe6ff;--danger:#ff6b6b}
 *{box-sizing:border-box;font-family:Inter,Segoe UI,system-ui,Arial,Helvetica,sans-serif}
-body{margin:0;background:var(--bg);color:#1f2937}
-.container{max-width:720px;margin:32px auto;padding:20px}
-h1{margin:0 0 12px}
-.balance{background:var(--card);padding:16px;border-radius:8px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
-.add, .list{background:var(--card);padding:16px;border-radius:8px;margin-bottom:16px}
+body{margin:0;background:linear-gradient(180deg,var(--bg),#4c1d95);color:#fff}
+.container{max-width:900px;margin:32px auto;padding:24px}
+h1{margin:0 0 12px;color:#fff}
+.balance{background:rgba(255,255,255,0.06);padding:12px;border-radius:10px;margin-bottom:16px;box-shadow:0 6px 18px rgba(0,0,0,0.12)}
+.add, .list{background:rgba(255,255,255,0.06);padding:16px;border-radius:10px;margin-bottom:16px}
 form{display:flex;gap:8px}
-form input{flex:1;padding:8px;border:1px solid #e5e7eb;border-radius:6px}
-form button{padding:8px 12px;background:var(--accent);color:#fff;border:none;border-radius:6px}
+form input{flex:1;padding:10px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;background:transparent;color:#fff}
+form input::placeholder{color:rgba(255,255,255,0.6)}
+form button{padding:8px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px}
+select#type{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:#fff}
 ul{list-style:none;padding:0;margin:0}
-li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f5f9}
-.amount{font-weight:600}
+li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.amount{font-weight:700}
 .amount.negative{color:var(--danger)}
-.tx-meta{color:#6b7280;font-size:12px}
-.delete{background:transparent;border:none;color:#9ca3af;cursor:pointer}
+.tx-meta{color:rgba(255,255,255,0.7);font-size:12px}
+.delete{background:transparent;border:none;color:rgba(255,255,255,0.6);cursor:pointer}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat{background:rgba(255,255,255,0.04);padding:12px;border-radius:8px;text-align:center}
+.stat .label{font-size:12px;color:rgba(255,255,255,0.8);margin-bottom:6px}
+.stat .value{font-size:18px;font-weight:700;color:#fff}
