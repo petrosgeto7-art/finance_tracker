@@ -6,15 +6,19 @@ async function fetchTx() {
 }
 
 function fmtMoney(v) {
-  return (v>=0? '$' : '-$') + Math.abs(v).toFixed(2)
+  const sign = v >= 0 ? '$' : '-$'
+  return sign + Math.abs(v).toFixed(2)
 }
 
 function render(txs) {
   const list = document.getElementById('tx-list')
   list.innerHTML = ''
-  let total = 0
+  let income = 0
+  let outcome = 0
   txs.forEach(t => {
-    total += t.amount
+    const amt = Number(t.amount) || 0
+    if (amt >= 0) income += amt
+    else outcome += amt
     const li = document.createElement('li')
     li.innerHTML = `
       <div>
@@ -22,12 +26,16 @@ function render(txs) {
         <div class="tx-meta">${t.date}</div>
       </div>
       <div>
-        <div class="amount ${t.amount<0? 'negative':''}">${fmtMoney(t.amount)}</div>
+        <div class="amount ${amt<0? 'negative':''}">${fmtMoney(amt)}</div>
         <button class="delete" data-id="${t.id}">✕</button>
       </div>`
     list.appendChild(li)
   })
+  const total = income + outcome
   document.getElementById('total').textContent = fmtMoney(total)
+  document.getElementById('income').textContent = fmtMoney(income)
+  document.getElementById('outcome').textContent = fmtMoney(outcome)
+  document.getElementById('debt').textContent = fmtMoney(Math.abs(outcome))
   document.querySelectorAll('.delete').forEach(b => b.addEventListener('click', async (e)=>{
     const id = e.target.dataset.id
     await fetch(api + '/' + id, {method:'DELETE'})
@@ -50,7 +58,8 @@ document.getElementById('tx-form').addEventListener('submit', async (e)=>{
   e.preventDefault()
   const description = document.getElementById('description').value
   const amount = document.getElementById('amount').value
-  await fetch(api, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({description, amount})})
+  const type = document.getElementById('type').value
+  await fetch(api, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({description, amount, type})})
   document.getElementById('tx-form').reset()
   load()
 })
